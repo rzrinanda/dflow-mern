@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import { loggerMiddleware } from "./middleware/logger.middleware";
-import { ProductRoute } from "./routes";
+import { ProductRoute, CustomerRoute } from "./routes";
 
 dotenv.config();
 if (!process.env.PORT) {
@@ -29,7 +29,8 @@ mongoose.connect(dbUri, (err: any) => {
 // app.use(loggerMiddleware());
 
 const router = express.Router();
-router.use(ProductRoute);
+router.use("/products",ProductRoute);
+router.use("/users",CustomerRoute);
 
 const PORT: number = parseInt(process.env.PORT as string, 10);
 const server = app.listen(PORT, () => {

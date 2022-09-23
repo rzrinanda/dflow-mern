@@ -1,7 +1,7 @@
 import { Customer } from "./customer";
 import customers from "./customer-schema";
 
-export const getProductList = async (req: any, res: any) => {
+export const getCustomerList = async (req: any, res: any) => {
   customers.find((err: any, result: any) => {
     if (err) {
       res.send("Error!");
@@ -12,7 +12,7 @@ export const getProductList = async (req: any, res: any) => {
   });
 };
 
-export const createProduct = async (req: any, res: any) => {
+export const createCustomer = async (req: any, res: any) => {
   const request: Customer = req.body;
   console.log(JSON.stringify(request));
   let prod = new customers(request);
@@ -26,19 +26,20 @@ export const createProduct = async (req: any, res: any) => {
   });
 };
 
-export const updateProduct = async (req: any, res: any) => {
+export const updateCustomer = async (req: any, res: any) => {
   let customer: Customer = req.body;
   customer.id = req.body._id;
-  const updProduct = {
+  const updCustomer = {
     _id: customer.id,
-    customerName: customer.customerName,
-    customerCode: customer.customerCode,
-    customerDesc: customer.customerDesc,
+    username: customer.username,
+    email: customer.email,
+    password: customer.password,
+    fullName: customer.fullName,
   };
-  console.log("BODY", customer, updProduct);
+  console.log("BODY", customer, updCustomer);
   customers.findOneAndUpdate(
     { _id: customer.id },
-    updProduct,
+    updCustomer,
     { upsert: true, new: true },
     (err, result) => {
       console.log("result", result);
@@ -53,7 +54,7 @@ export const updateProduct = async (req: any, res: any) => {
   );
 };
 
-export const deleteProduct = async (req: any, res: any) => {
+export const deleteCustomer = async (req: any, res: any) => {
   const customerID: number = req.body["id"];
   console.log(`Customer ${customerID}`);
   //delete
